@@ -60,6 +60,9 @@ int pthread_rwlock_rdlock(pthread_rwlock_t * rwlock);
 LIBLWPTW_API
 int pthread_rwlock_wrlock(pthread_rwlock_t * rwlock);
 
+LIBLWPTW_API
+int pthread_rwlock_unlock(pthread_rwlock_t * rwlock);
+
 #ifdef __cplusplus
 }
 #endif
