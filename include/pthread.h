@@ -18,8 +18,18 @@ typedef struct pthread_mutex_s
 	int					_futex;
 	int					_owner;
 	unsigned int		_count;
-
 } pthread_mutex_t;
+
+typedef struct pthread_rwlock_s
+{
+	int				_lock;				/*	spinlock*/
+	unsigned int	_nr_readers;		/*	number of holding for rd*/
+	unsigned int	_rd_futex;
+	unsigned int	_wr_futex;
+	unsigned int	_nr_readers_queued;	/*	number of waiting for rd*/
+	unsigned int	_nr_writers_queued;	/*	number of waiting for wr*/
+	int				_writer;			/*	identity of holding wr*/
+} pthread_rwlock_t;
 
 /**
  *	ETIMEDOUT hasn't been defined in errno.h
@@ -37,6 +47,12 @@ typedef struct pthread_mutex_s
 #ifdef	__cplusplus
 extern	"C" {
 #endif
+
+LIBLWPTW_API
+int pthread_mutex_lock(pthread_mutex_t * mutex);
+
+LIBLWPTW_API
+int pthread_mutex_unlock(pthread_mutex_t * mutex);
 
 #ifdef __cplusplus
 }
