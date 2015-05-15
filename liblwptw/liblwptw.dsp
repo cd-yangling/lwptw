@@ -118,6 +118,10 @@ SOURCE=.\pthread_rwlockattr_getkind_np.c
 # End Source File
 # Begin Source File
 
+SOURCE=.\pthread_rwlockattr_init.c
+# End Source File
+# Begin Source File
+
 SOURCE=.\pthread_rwlockattr_setkind_np.c
 # End Source File
 # End Group
