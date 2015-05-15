@@ -112,6 +112,10 @@ SOURCE=.\pthread_rwlock_unlock.c
 
 SOURCE=.\pthread_rwlock_wrlock.c
 # End Source File
+# Begin Source File
+
+SOURCE=.\pthread_rwlockattr_setkind_np.c
+# End Source File
 # End Group
 # Begin Group "Header Files"
 

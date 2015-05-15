@@ -20,6 +20,21 @@ typedef struct pthread_mutex_s
 	unsigned int		_count;
 } pthread_mutex_t;
 
+/*	read-write lock types*/
+enum
+{
+	PTHREAD_RWLOCK_PREFER_READER_NP,
+	PTHREAD_RWLOCK_PREFER_WRITER_NP,		/*	dummy*/
+	PTHREAD_RWLOCK_PREFER_WRITER_NONRECURSIVE_NP,
+	PTHREAD_RWLOCK_DEFAULT_NP = PTHREAD_RWLOCK_PREFER_READER_NP
+};
+
+typedef struct pthread_rwlockattr_s
+{
+	int					_kind;			/*	lock kind*/
+	int					_rsv0;			/*	never use*/
+} pthread_rwlockattr_t;
+
 typedef struct pthread_rwlock_s
 {
 	int				_lock;				/*	spinlock*/
@@ -62,6 +77,10 @@ int pthread_rwlock_wrlock(pthread_rwlock_t * rwlock);
 
 LIBLWPTW_API
 int pthread_rwlock_unlock(pthread_rwlock_t * rwlock);
+
+LIBLWPTW_API
+int pthread_rwlockattr_setkind_np(
+	pthread_rwlockattr_t * attr, int pref);
 
 #ifdef __cplusplus
 }

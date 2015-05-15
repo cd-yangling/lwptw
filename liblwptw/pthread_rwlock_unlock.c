@@ -20,7 +20,6 @@ static const char rcsid[] =
 
 #include "./spinlock.h"
 #include "./liblwptw.h"
-#include "futex/futex.h"
 #include "pthread.h"
 #include <errno.h>
 #include <limits.h>	/*	INT_MAX required*/

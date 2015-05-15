@@ -21,7 +21,6 @@ static const char rcsid[] =
 
 #include "./atomic.h"
 #include "./liblwptw.h"
-#include "futex/futex.h"
 #include "pthread.h"
 
 /**
