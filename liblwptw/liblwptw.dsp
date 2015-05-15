@@ -104,6 +104,10 @@ SOURCE=.\pthread_mutex_unlock.c
 
 SOURCE=.\pthread_rwlock_rdlock.c
 # End Source File
+# Begin Source File
+
+SOURCE=.\pthread_rwlock_wrlock.c
+# End Source File
 # End Group
 # Begin Group "Header Files"
 

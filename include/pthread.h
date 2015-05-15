@@ -54,6 +54,12 @@ int pthread_mutex_lock(pthread_mutex_t * mutex);
 LIBLWPTW_API
 int pthread_mutex_unlock(pthread_mutex_t * mutex);
 
+LIBLWPTW_API
+int pthread_rwlock_rdlock(pthread_rwlock_t * rwlock);
+
+LIBLWPTW_API
+int pthread_rwlock_wrlock(pthread_rwlock_t * rwlock);
+
 #ifdef __cplusplus
 }
 #endif
