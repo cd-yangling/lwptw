@@ -78,6 +78,12 @@ int pthread_rwlock_wrlock(pthread_rwlock_t * rwlock);
 LIBLWPTW_API
 int pthread_rwlock_unlock(pthread_rwlock_t * rwlock);
 
+LIBLWPTW_API int
+pthread_rwlockattr_init(pthread_rwlockattr_t * attr);
+
+LIBLWPTW_API int
+pthread_rwlockattr_destroy(pthread_rwlockattr_t * attr);
+
 LIBLWPTW_API
 int pthread_rwlockattr_getkind_np(
 	const pthread_rwlockattr_t * attr, int * pref);

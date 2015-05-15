@@ -114,6 +114,10 @@ SOURCE=.\pthread_rwlock_wrlock.c
 # End Source File
 # Begin Source File
 
+SOURCE=.\pthread_rwlockattr_destroy.c
+# End Source File
+# Begin Source File
+
 SOURCE=.\pthread_rwlockattr_getkind_np.c
 # End Source File
 # Begin Source File
