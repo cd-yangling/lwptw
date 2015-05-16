@@ -29,6 +29,9 @@ enum
 	PTHREAD_RWLOCK_DEFAULT_NP = PTHREAD_RWLOCK_PREFER_READER_NP
 };
 
+#define PTHREAD_RWLOCK_INITIALIZER	\
+	{ 0, 0, 0, 0, 0, 0, 0, 0 }
+
 typedef struct pthread_rwlockattr_s
 {
 	int					_kind;			/*	lock kind*/
@@ -44,6 +47,7 @@ typedef struct pthread_rwlock_s
 	unsigned int	_nr_readers_queued;	/*	number of waiting for rd*/
 	unsigned int	_nr_writers_queued;	/*	number of waiting for wr*/
 	int				_writer;			/*	identity of holding wr*/
+	int				_flags;
 } pthread_rwlock_t;
 
 /**
@@ -68,6 +72,11 @@ int pthread_mutex_lock(pthread_mutex_t * mutex);
 
 LIBLWPTW_API
 int pthread_mutex_unlock(pthread_mutex_t * mutex);
+
+LIBLWPTW_API
+int pthread_rwlock_init(
+	pthread_rwlock_t * rwlock,
+	const pthread_rwlockattr_t * attr);
 
 LIBLWPTW_API
 int pthread_rwlock_destroy(pthread_rwlockattr_t * attr);
