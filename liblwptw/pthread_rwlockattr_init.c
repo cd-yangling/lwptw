@@ -20,8 +20,8 @@ static const char rcsid[] =
 
 #include "pthread.h"
 
-LIBLWPTW_API int
-pthread_rwlockattr_init(pthread_rwlockattr_t * attr)
+LIBLWPTW_API
+int pthread_rwlockattr_init(pthread_rwlockattr_t * attr)
 {
   attr->_kind = PTHREAD_RWLOCK_DEFAULT_NP;
   attr->_rsv0 = 0;

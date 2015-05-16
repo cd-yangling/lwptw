@@ -102,6 +102,10 @@ SOURCE=.\pthread_mutex_unlock.c
 # End Source File
 # Begin Source File
 
+SOURCE=.\pthread_rwlock_destroy.c
+# End Source File
+# Begin Source File
+
 SOURCE=.\pthread_rwlock_rdlock.c
 # End Source File
 # Begin Source File
