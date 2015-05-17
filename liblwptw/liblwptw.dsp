@@ -114,6 +114,10 @@ SOURCE=.\pthread_rwlock_rdlock.c
 # End Source File
 # Begin Source File
 
+SOURCE=.\pthread_rwlock_tryrdlock.c
+# End Source File
+# Begin Source File
+
 SOURCE=.\pthread_rwlock_unlock.c
 # End Source File
 # Begin Source File
