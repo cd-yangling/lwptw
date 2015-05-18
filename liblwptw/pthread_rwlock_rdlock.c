@@ -25,39 +25,17 @@ static const char rcsid[] =
 #include <errno.h>
 #include <windows.h>
 
-static int
-pthread_rwlock_rdlock_slow(
-	pthread_rwlock_t * rwlock, int tid)
+LIBLWPTW_API
+int pthread_rwlock_rdlock(pthread_rwlock_t * rwlock)
 {
 	int result = 0;
 	int _futex;
+	int tid = GetCurrentThreadId();
+
+	spin_acquire((spinlock_t*)&rwlock->_lock);
 
 	for(;;)
 	{
-		if(rwlock->_writer == tid)
-		{
-			/*	holding WR by self. deadlock*/
-			result = EDEADLK;
-			break;
-		}
-
-		if(++rwlock->_nr_readers_queued == 0)
-		{
-			--rwlock->_nr_readers_queued;
-			result = EAGAIN;
-			break;
-		}
-
-		_futex = rwlock->_rd_futex;
-
-		spin_release((spinlock_t*)&rwlock->_lock);
-
-		lll_futex_wait(&rwlock->_rd_futex, _futex);
-
-		spin_acquire((spinlock_t*)&rwlock->_lock);
-
-		--rwlock->_nr_readers_queued;
-
 		if(can_hold_rdlock(rwlock))
 		{
 			if(++rwlock->_nr_readers == 0)
@@ -67,32 +45,33 @@ pthread_rwlock_rdlock_slow(
 			}
 			break;
 		}
+
+		if(rwlock->_writer == tid)
+		{
+			/*	holding WR by myself. deadlock*/
+			result = EDEADLK;
+			break;
+		}
+		
+		if(++rwlock->_nr_readers_queued == 0)
+		{
+			--rwlock->_nr_readers_queued;
+			result = EAGAIN;
+			break;
+		}
+		
+		_futex = rwlock->_rd_futex;
+		
+		spin_release((spinlock_t*)&rwlock->_lock);
+		
+		lll_futex_wait(&rwlock->_rd_futex, _futex);
+		
+		spin_acquire((spinlock_t*)&rwlock->_lock);
+		
+		--rwlock->_nr_readers_queued;
 	}
 
 	spin_release((spinlock_t*)&rwlock->_lock);
 
 	return result;
-}
-
-LIBLWPTW_API
-int pthread_rwlock_rdlock(pthread_rwlock_t * rwlock)
-{
-	int result = 0;
-	int tid = GetCurrentThreadId();
-
-	spin_acquire((spinlock_t*)&rwlock->_lock);
-
-	if(can_hold_rdlock(rwlock))
-	{
-		if(++rwlock->_nr_readers == 0)
-		{
-			--rwlock->_nr_readers;
-			result = EAGAIN;
-		}
-
-		spin_release((spinlock_t*)&rwlock->_lock);
-		return result;
-	}
-
-	return pthread_rwlock_rdlock_slow(rwlock, tid);
 }
