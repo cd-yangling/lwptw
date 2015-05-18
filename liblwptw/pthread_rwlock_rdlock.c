@@ -58,7 +58,7 @@ pthread_rwlock_rdlock_slow(
 
 		--rwlock->_nr_readers_queued;
 
-		if(try_hold_rdlock(rwlock))
+		if(can_hold_rdlock(rwlock))
 		{
 			if(++rwlock->_nr_readers == 0)
 			{
@@ -82,7 +82,7 @@ int pthread_rwlock_rdlock(pthread_rwlock_t * rwlock)
 
 	spin_acquire((spinlock_t*)&rwlock->_lock);
 
-	if(try_hold_rdlock(rwlock))
+	if(can_hold_rdlock(rwlock))
 	{
 		if(++rwlock->_nr_readers == 0)
 		{

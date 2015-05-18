@@ -20,7 +20,7 @@
 					((_rwlock_)->_flags == 0)
 
 /*	没有写者 并且 (没有写排队或读优先)*/
-#define	try_hold_rdlock(_rwlock_)				\
+#define	can_hold_rdlock(_rwlock_)				\
 	(											\
 		((_rwlock_)->_writer == 0) &&			\
 		(										\
@@ -29,7 +29,7 @@
 		)										\
 	)
 
-#define	try_hold_wrlock(_rwlock_)				\
+#define	can_hold_wrlock(_rwlock_)				\
 	(											\
 		(										\
 			((_rwlock_)->_writer) |				\

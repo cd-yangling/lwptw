@@ -38,7 +38,7 @@ int pthread_rwlock_timedwrlock(
 
 	for(;;)
 	{
-		if(try_hold_wrlock(rwlock))
+		if(can_hold_wrlock(rwlock))
 		{
 			rwlock->_writer = tid;
 			break;

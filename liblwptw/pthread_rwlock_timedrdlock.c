@@ -38,7 +38,7 @@ int pthread_rwlock_timedrdlock(
 
 	for(;;)
 	{
-		if(try_hold_rdlock(rwlock))
+		if(can_hold_rdlock(rwlock))
 		{
 			if(++rwlock->_nr_readers == 0)
 			{

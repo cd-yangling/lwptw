@@ -31,7 +31,7 @@ int pthread_rwlock_tryrdlock(pthread_rwlock_t * rwlock)
 
 	spin_acquire((spinlock_t*)&rwlock->_lock);
 
-	if(try_hold_rdlock(rwlock))
+	if(can_hold_rdlock(rwlock))
 	{
 		if(++rwlock->_nr_readers == 0)
 		{

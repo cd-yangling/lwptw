@@ -32,7 +32,7 @@ int pthread_rwlock_trywrlock(pthread_rwlock_t * rwlock)
 
 	spin_acquire((spinlock_t*)&rwlock->_lock);
 
-	if(try_hold_wrlock(rwlock))
+	if(can_hold_wrlock(rwlock))
 	{
 		rwlock->_writer = tid;
 		result = 0;

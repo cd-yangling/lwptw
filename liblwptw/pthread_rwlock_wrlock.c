@@ -57,7 +57,7 @@ pthread_rwlock_wrlock_slow(pthread_rwlock_t * rwlock, int tid)
 
 		--rwlock->_nr_writers_queued;
 
-		if(try_hold_wrlock(rwlock))
+		if(can_hold_wrlock(rwlock))
 		{
 			rwlock->_writer = tid;
 			break;
@@ -76,7 +76,7 @@ int pthread_rwlock_wrlock(pthread_rwlock_t * rwlock)
 
 	spin_acquire((spinlock_t*)&rwlock->_lock);
 
-	if(try_hold_wrlock(rwlock))
+	if(can_hold_wrlock(rwlock))
 	{
 		rwlock->_writer = tid;
 
