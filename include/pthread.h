@@ -63,6 +63,19 @@ typedef struct pthread_rwlock_s
 #	define	LIBLWPTW_API __declspec(dllimport)
 #endif
 
+#ifndef HAVE_STRUCT_TIMESPEC
+#define HAVE_STRUCT_TIMESPEC 1
+/**
+ *	POSIX.1b structure for a time value.
+ *	This is like a `struct timeval' but
+ *	has nanoseconds instead of microseconds.
+ */
+struct timespec {
+	long tv_sec;			/* Seconds.  */
+	long tv_nsec;			/* Nanoseconds.  */
+};
+#endif /* HAVE_STRUCT_TIMESPEC */
+
 #ifdef	__cplusplus
 extern	"C" {
 #endif
@@ -96,6 +109,10 @@ int pthread_rwlock_wrlock(pthread_rwlock_t * rwlock);
 
 LIBLWPTW_API
 int pthread_rwlock_trywrlock(pthread_rwlock_t * rwlock);
+
+LIBLWPTW_API
+int pthread_rwlock_timedwrlock(
+	pthread_rwlock_t * rwlock, const struct timespec * tmout);
 
 LIBLWPTW_API
 int pthread_rwlock_unlock(pthread_rwlock_t * rwlock);
