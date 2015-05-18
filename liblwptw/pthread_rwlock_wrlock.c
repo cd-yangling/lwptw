@@ -25,17 +25,26 @@ static const char rcsid[] =
 #include <errno.h>
 #include <windows.h>
 
-static int
-pthread_rwlock_wrlock_slow(pthread_rwlock_t * rwlock, int tid)
+LIBLWPTW_API
+int pthread_rwlock_wrlock(pthread_rwlock_t * rwlock)
 {
 	int result = 0;
 	int _futex;
+	int tid = GetCurrentThreadId();
+
+	spin_acquire((spinlock_t*)&rwlock->_lock);
 
 	for(;;)
 	{
+		if(can_hold_wrlock(rwlock))
+		{
+			rwlock->_writer = tid;
+			break;
+		}
+
 		if(rwlock->_writer == tid)
 		{
-			/*	already held wrlock. deadlock*/
+			/*	holding WR by myself. deadlock*/
 			result = EDEADLK;
 			break;
 		}
@@ -56,33 +65,7 @@ pthread_rwlock_wrlock_slow(pthread_rwlock_t * rwlock, int tid)
 		spin_acquire((spinlock_t*)&rwlock->_lock);
 
 		--rwlock->_nr_writers_queued;
-
-		if(can_hold_wrlock(rwlock))
-		{
-			rwlock->_writer = tid;
-			break;
-		}
 	}
-
-	spin_release((spinlock_t*)&rwlock->_lock);
 
 	return result;
-}
-
-LIBLWPTW_API
-int pthread_rwlock_wrlock(pthread_rwlock_t * rwlock)
-{
-	int tid = GetCurrentThreadId();
-
-	spin_acquire((spinlock_t*)&rwlock->_lock);
-
-	if(can_hold_wrlock(rwlock))
-	{
-		rwlock->_writer = tid;
-
-		spin_release((spinlock_t*)&rwlock->_lock);
-		return 0;
-	}
-
-	return pthread_rwlock_wrlock_slow(rwlock, tid);
 }

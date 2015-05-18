@@ -52,22 +52,22 @@ int pthread_rwlock_rdlock(pthread_rwlock_t * rwlock)
 			result = EDEADLK;
 			break;
 		}
-		
+
 		if(++rwlock->_nr_readers_queued == 0)
 		{
 			--rwlock->_nr_readers_queued;
 			result = EAGAIN;
 			break;
 		}
-		
+
 		_futex = rwlock->_rd_futex;
 		
 		spin_release((spinlock_t*)&rwlock->_lock);
-		
+
 		lll_futex_wait(&rwlock->_rd_futex, _futex);
-		
+
 		spin_acquire((spinlock_t*)&rwlock->_lock);
-		
+
 		--rwlock->_nr_readers_queued;
 	}
 
