@@ -88,6 +88,10 @@ LIBLWPTW_API
 int pthread_rwlock_tryrdlock(pthread_rwlock_t * rwlock);
 
 LIBLWPTW_API
+int pthread_rwlock_timedrdlock(
+	pthread_rwlock_t * rwlock, const struct timespec * tmout);
+
+LIBLWPTW_API
 int pthread_rwlock_wrlock(pthread_rwlock_t * rwlock);
 
 LIBLWPTW_API
