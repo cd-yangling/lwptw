@@ -20,17 +20,10 @@ static const char rcsid[] =
 
 #include "./spinlock.h"
 #include "./liblwptw.h"
+#include "./rwlock.h"
 #include "pthread.h"
 #include <errno.h>
 #include <windows.h>
-
-#define	try_hold_wrlock(_rwlock_)		\
-	(									\
-		(								\
-			((_rwlock_)->_writer) |		\
-			((_rwlock_)->_nr_readers)	\
-		) == 0							\
-	)
 
 static int
 pthread_rwlock_wrlock_slow(pthread_rwlock_t * rwlock, int tid)

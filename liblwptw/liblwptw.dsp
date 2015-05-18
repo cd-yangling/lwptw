@@ -158,6 +158,10 @@ SOURCE=.\liblwptw.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\rwlock.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\spinlock.h
 # End Source File
 # End Group
