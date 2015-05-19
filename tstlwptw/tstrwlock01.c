@@ -1,4 +1,5 @@
 #include "pthread.h"
+#include "tstlwptw.h"
 #include <errno.h>
 #include <limits.h>
 
@@ -8,6 +9,8 @@ int do_test0101(void)
 	int result, except;
 	pthread_rwlockattr_t attr;
 	int pref;
+
+	_total_cnt = UINT_MAX;
 	
 	for(i = 0; ; i++)
 	{
@@ -36,6 +39,8 @@ int do_test0101(void)
 				return -3;
 			}
 		}
+
+		_cur_finish = i;
 
 		if(i == UINT_MAX)
 			break;

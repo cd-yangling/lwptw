@@ -1,4 +1,5 @@
 #include "pthread.h"
+#include "tstlwptw.h"
 #include <errno.h>
 #include <limits.h>
 #include <string.h>
@@ -11,6 +12,8 @@ int do_test0201(void)
 	pthread_rwlock_t	writer_p;
 	pthread_rwlock_t	rwlock_v;
 	pthread_rwlockattr_t	attr;
+
+	_total_cnt = UINT_MAX;
 
 	memset(&reader_p, 0, sizeof(reader_p));
 	memset(&writer_p, 0, sizeof(writer_p));
@@ -69,6 +72,8 @@ int do_test0201(void)
 		default:
 			break;
 		}
+
+		_cur_finish = i;
 
 		if(i == UINT_MAX)
 		{
