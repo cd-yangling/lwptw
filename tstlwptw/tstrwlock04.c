@@ -70,7 +70,7 @@ int do_test0401(void)
 		return -2;
 	}
 
-	abstime.tv_sec = time(NULL) + 5;
+	abstime.tv_sec = time(NULL) + 3;
 	abstime.tv_nsec= 0;
 
 	result = pthread_rwlock_timedrdlock(&rwlock, &abstime);
@@ -183,7 +183,7 @@ int do_test0403(void)
 		return -2;
 	}
 	
-	abstime.tv_sec = time(NULL) + 5;
+	abstime.tv_sec = time(NULL) + 3;
 	abstime.tv_nsec= 0;
 	
 	result = pthread_rwlock_timedrdlock(&rwlock, &abstime);
