@@ -2,7 +2,7 @@
 #include <errno.h>
 #include <limits.h>
 
-int do_test01(void)
+int do_test0101(void)
 {
 	unsigned int i;
 	int result, except;
@@ -42,4 +42,22 @@ int do_test01(void)
 	}
 
 	return 0;
+}
+
+int do_test0102(void)
+{
+	int result;
+	pthread_rwlockattr_t attr;
+
+	result = pthread_rwlockattr_init(&attr);
+	if(result)
+		return -1;
+
+	if(attr._kind != PTHREAD_RWLOCK_DEFAULT_NP)
+		return -2;
+
+	if(attr._kind != PTHREAD_RWLOCK_PREFER_READER_NP)
+		return -3;
+
+	return pthread_rwlock_destroy(&attr);
 }

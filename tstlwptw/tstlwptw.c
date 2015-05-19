@@ -20,14 +20,16 @@
 		#_name_,	_name_		\
 	}
 
-extern int do_test01(void);
+extern int do_test0101(void);
+extern int do_test0102(void);
 
 struct test_fn_t {
 	const char * name_fn;
 	int (*test_fn)(void);
 } test_fns[] = 
 {
-	DECL_TEST_FN(do_test01),
+	DECL_TEST_FN(do_test0101),
+	DECL_TEST_FN(do_test0102),
 };
 
 static volatile HANDLE _bgn_evt;
