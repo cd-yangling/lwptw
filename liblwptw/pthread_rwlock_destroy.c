@@ -21,7 +21,7 @@ static const char rcsid[] =
 #include "pthread.h"
 
 LIBLWPTW_API
-int pthread_rwlock_destroy(pthread_rwlockattr_t * attr)
+int pthread_rwlock_destroy(pthread_rwlock_t * rwlock)
 {
   return 0;	/*	just let our compiler happy*/
 }

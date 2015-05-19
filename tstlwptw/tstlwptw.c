@@ -22,6 +22,7 @@
 
 extern int do_test0101(void);
 extern int do_test0102(void);
+extern int do_test0201(void);
 
 struct test_fn_t {
 	const char * name_fn;
@@ -30,6 +31,7 @@ struct test_fn_t {
 {
 	DECL_TEST_FN(do_test0101),
 	DECL_TEST_FN(do_test0102),
+	DECL_TEST_FN(do_test0201),
 };
 
 static volatile HANDLE _bgn_evt;
@@ -99,6 +101,7 @@ int main()
 		}
 		else
 		{
+			result= 0;
 			color = COLOR_YELLOW;
 			tipinfo = "ignore";
 			
@@ -109,7 +112,7 @@ int main()
 		SetConsoleTextAttribute(
 				GetStdHandle(STD_OUTPUT_HANDLE), color);
 
-		printf("\b\b\b\b\b\b\b %s      \n", tipinfo);
+		printf("\b\b\b\b\b\b\b %s code: %d\n", tipinfo, result);
 	}
 
 	SetConsoleTextAttribute(

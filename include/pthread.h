@@ -92,7 +92,7 @@ int pthread_rwlock_init(
 	const pthread_rwlockattr_t * attr);
 
 LIBLWPTW_API
-int pthread_rwlock_destroy(pthread_rwlockattr_t * attr);
+int pthread_rwlock_destroy(pthread_rwlock_t * rwlock);
 
 LIBLWPTW_API
 int pthread_rwlock_rdlock(pthread_rwlock_t * rwlock);

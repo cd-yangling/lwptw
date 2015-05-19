@@ -59,5 +59,5 @@ int do_test0102(void)
 	if(attr._kind != PTHREAD_RWLOCK_PREFER_READER_NP)
 		return -3;
 
-	return pthread_rwlock_destroy(&attr);
+	return pthread_rwlockattr_destroy(&attr);
 }
