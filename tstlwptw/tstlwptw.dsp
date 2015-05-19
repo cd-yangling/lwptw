@@ -101,6 +101,10 @@ SOURCE=.\tstrwlock02.c
 
 SOURCE=.\tstrwlock03.c
 # End Source File
+# Begin Source File
+
+SOURCE=.\tstrwlock04.c
+# End Source File
 # End Group
 # Begin Group "Header Files"
 
