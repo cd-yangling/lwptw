@@ -26,8 +26,10 @@ extern int do_test0201(void);
 extern int do_test0301(void);
 extern int do_test0302(void);
 extern int do_test0303(void);
+extern int do_test0304(void);
+extern int do_test0305(void);
 
-struct test_fn_t {
+static struct test_fn_t {
 	const char * name_fn;
 	int (*test_fn)(void);
 } test_fns[] = 
@@ -38,6 +40,8 @@ struct test_fn_t {
 	DECL_TEST_FN(do_test0301),
 	DECL_TEST_FN(do_test0302),
 	DECL_TEST_FN(do_test0303),
+	DECL_TEST_FN(do_test0304),
+	DECL_TEST_FN(do_test0305),
 };
 
 static volatile HANDLE _bgn_evt;
@@ -137,6 +141,7 @@ int main(int argc, char **argv)
 			GetStdHandle(STD_OUTPUT_HANDLE), COLOR_WHITE);
 		printf("fn: %11s testing ...", test_fns[i].name_fn);
 
+		_total_cnt	  = 1;
 		_cur_finish   = 0;
 		_draw_running = 1;
 		SetEvent(_bgn_evt);

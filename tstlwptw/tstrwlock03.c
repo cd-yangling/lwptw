@@ -4,6 +4,9 @@
 #include <limits.h>
 #include <stdio.h>
 
+/**
+ *	_nr_reader overflow test
+ */
 int do_test0301(void)
 {
 	unsigned int i;
@@ -86,6 +89,49 @@ int do_test0303(void)
 	
 	result = pthread_rwlock_timedrdlock(&rwlock, NULL);
 	if(result != EAGAIN)
+		return -3;
+	
+	return 0;
+}
+
+/**
+ *	EDEADLK test
+ */
+int do_test0304(void)
+{
+	int result;
+	pthread_rwlock_t	rwlock;
+
+	result = pthread_rwlock_init(&rwlock, NULL);
+	if(result)
+		return -1;
+
+	result = pthread_rwlock_wrlock(&rwlock);
+	if(result)
+		return -2;
+
+	result = pthread_rwlock_rdlock(&rwlock);
+	if(result != EDEADLK)
+		return -3;
+
+	return 0;
+}
+
+int do_test0305(void)
+{
+	int result;
+	pthread_rwlock_t	rwlock;
+	
+	result = pthread_rwlock_init(&rwlock, NULL);
+	if(result)
+		return -1;
+	
+	result = pthread_rwlock_wrlock(&rwlock);
+	if(result)
+		return -2;
+	
+	result = pthread_rwlock_timedrdlock(&rwlock, NULL);
+	if(result != EDEADLK)
 		return -3;
 	
 	return 0;

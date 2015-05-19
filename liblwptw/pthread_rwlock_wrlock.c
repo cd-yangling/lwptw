@@ -67,5 +67,7 @@ int pthread_rwlock_wrlock(pthread_rwlock_t * rwlock)
 		--rwlock->_nr_writers_queued;
 	}
 
+	spin_release((spinlock_t*)&rwlock->_lock);
+
 	return result;
 }
