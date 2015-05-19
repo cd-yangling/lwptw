@@ -3,6 +3,7 @@
 #include <errno.h>
 #include <limits.h>
 #include <stdio.h>
+#include <windows.h>
 
 /**
  *	_nr_reader overflow test
@@ -135,4 +136,37 @@ int do_test0305(void)
 		return -3;
 	
 	return 0;
+}
+
+/**
+ *	_nr_readers_queued overflow test
+ */
+int do_test0306(void)
+{
+	int result;
+	int tid = GetCurrentThreadId();
+	pthread_rwlock_t	rwlock = PTHREAD_RWLOCK_INITIALIZER;
+
+	rwlock._writer = tid + 1;
+	rwlock._nr_readers_queued = UINT_MAX;
+	result = pthread_rwlock_rdlock(&rwlock);
+	if(result != EAGAIN)
+		return -1;
+	else
+		return 0;
+}
+
+int do_test0307(void)
+{
+	int result;
+	int tid = GetCurrentThreadId();
+	pthread_rwlock_t	rwlock = PTHREAD_RWLOCK_INITIALIZER;
+
+	rwlock._writer = tid + 1;
+	rwlock._nr_readers_queued = UINT_MAX;
+	result = pthread_rwlock_timedrdlock(&rwlock, NULL);
+	if(result != EAGAIN)
+		return -1;
+	else
+		return 0;
 }
