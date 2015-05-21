@@ -39,6 +39,10 @@ extern int do_test0501(void);
 extern int do_test0502(void);
 extern int do_test0503(void);
 extern int do_test0504(void);
+extern int do_test0601(void);
+extern int do_test0602(void);
+extern int do_test0603(void);
+extern int do_test0604(void);
 
 static struct test_fn_t {
 	const char * name_fn;
@@ -64,6 +68,10 @@ static struct test_fn_t {
 	DECL_TEST_FN(do_test0502),
 	DECL_TEST_FN(do_test0503),
 	DECL_TEST_FN(do_test0504),
+	DECL_TEST_FN(do_test0601),
+	DECL_TEST_FN(do_test0602),
+	DECL_TEST_FN(do_test0603),
+	DECL_TEST_FN(do_test0604),
 };
 
 static volatile HANDLE _bgn_evt;
@@ -161,7 +169,7 @@ int main(int argc, char **argv)
 
 		SetConsoleTextAttribute(
 			GetStdHandle(STD_OUTPUT_HANDLE), COLOR_WHITE);
-		printf("fn: %11s testing ...", test_fns[i].name_fn);
+		printf("fn: %11s testing...", test_fns[i].name_fn);
 
 		_total_cnt	  = 1;
 		_cur_finish   = 0;
@@ -194,7 +202,7 @@ int main(int argc, char **argv)
 		SetConsoleTextAttribute(
 				GetStdHandle(STD_OUTPUT_HANDLE), color);
 
-		printf("\b\b\b\b\b\b\b %s code: %d    \n", tipinfo, result);
+		printf("\b\b\b\b\b\b %s code: %d    \n", tipinfo, result);
 	}
 
 	SetConsoleTextAttribute(
