@@ -35,6 +35,10 @@ extern int do_test0402(void);
 extern int do_test0403(void);
 extern int do_test0404(void);
 extern int do_test0405(void);
+extern int do_test0501(void);
+extern int do_test0502(void);
+extern int do_test0503(void);
+extern int do_test0504(void);
 
 static struct test_fn_t {
 	const char * name_fn;
@@ -56,6 +60,10 @@ static struct test_fn_t {
 	DECL_TEST_FN(do_test0403),
 	DECL_TEST_FN(do_test0404),
 	DECL_TEST_FN(do_test0405),
+	DECL_TEST_FN(do_test0501),
+	DECL_TEST_FN(do_test0502),
+	DECL_TEST_FN(do_test0503),
+	DECL_TEST_FN(do_test0504),
 };
 
 static volatile HANDLE _bgn_evt;
