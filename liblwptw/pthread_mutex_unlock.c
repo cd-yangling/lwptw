@@ -29,8 +29,11 @@ int pthread_mutex_unlock(pthread_mutex_t * mutex)
 	switch(mutex->_flags)
 	{
 	case PTHREAD_MUTEX_NORMAL:
-		lll_lock_release(mutex->_futex);
-		break;
+		{
+normal:
+			lll_lock_release(mutex->_futex);
+			return 0;
+		}
 	case PTHREAD_MUTEX_RECURSIVE:
 		{
 			int tid = GetCurrentThreadId();
@@ -41,17 +44,21 @@ int pthread_mutex_unlock(pthread_mutex_t * mutex)
 			if(--mutex->_count != 0)
 				return 0;	/*	still hold the mutex*/
 
-			mutex->_owner = 0;
-			lll_lock_release(mutex->_futex);
+			goto normal;
 		}
-		break;
+		return 0;
 	case PTHREAD_MUTEX_ERRORCHECK:
-		mutex->_owner = 0;
-		lll_lock_release(mutex->_futex);
+		{
+			int tid = GetCurrentThreadId();
+
+			if((mutex->_owner != tid) ||
+				(!(mutex->_futex != 0)))
+				return EPERM;
+
+			goto normal;
+		}
 		break;
 	default:
 		return EINVAL;
 	}
-
-	return 0;
 }

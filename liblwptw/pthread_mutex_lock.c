@@ -31,12 +31,13 @@ int pthread_mutex_lock(pthread_mutex_t * mutex)
 	case PTHREAD_MUTEX_NORMAL:
 		{
 			lll_lock_acquire(mutex->_futex);
-			return 0;
 		}
+		return 0;
 	case PTHREAD_MUTEX_RECURSIVE:
 		{
 			/*	recursive mutex*/
 			int tid = GetCurrentThreadId();
+
 			if(mutex->_owner == tid)
 			{
 				if(0 == (mutex->_count + 1))
@@ -56,6 +57,7 @@ int pthread_mutex_lock(pthread_mutex_t * mutex)
 	case PTHREAD_MUTEX_ERRORCHECK:
 		{
 			int tid = GetCurrentThreadId();
+
 			if(mutex->_owner == tid)
 				return EDEADLK;
 
