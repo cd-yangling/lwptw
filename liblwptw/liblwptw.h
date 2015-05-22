@@ -41,10 +41,19 @@ static int lll_futex_timed_wait(
  *	more implementation details see below link
  *	http://people.redhat.com/drepper/futex.pdf
  */
-#define	lll_lock_acquire(_futex_)						\
+always_inline static
+int __lll_lock_try_acquire(int * lock)
+{
+	return atomic_cmpxchg(lock, 0, 1);
+}
+
+#define	lll_lock_try_acquire(_lock_)					\
+	__lll_lock_try_acquire(&(_lock_))
+
+#define	lll_lock_acquire(_lock_)						\
 	do {												\
 		int c;											\
-		int *__futex = &(_futex_);						\
+		int *__futex = &(_lock_);						\
 		if((c = atomic_cmpxchg(__futex, 0, 1)) != 0) {	\
 			if(c != 2)									\
 				c = atomic_xchg(__futex, 2);			\
@@ -55,9 +64,9 @@ static int lll_futex_timed_wait(
 		}												\
 	} while(0)
 
-#define	lll_lock_release(_futex_)						\
+#define	lll_lock_release(_lock_)						\
 	do {												\
-		int *__futex = &(_futex_);						\
+		int *__futex = &(_lock_);						\
 		if(atomic_dec_and_return(__futex) != 1)	 {		\
 			*(volatile int *)(__futex) = 0;				\
 			lll_futex_wake(__futex, 1);					\

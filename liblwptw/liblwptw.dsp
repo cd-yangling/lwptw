@@ -98,6 +98,10 @@ SOURCE=.\pthread_mutex_lock.c
 # End Source File
 # Begin Source File
 
+SOURCE=.\pthread_mutex_trylock.c
+# End Source File
+# Begin Source File
+
 SOURCE=.\pthread_mutex_unlock.c
 # End Source File
 # Begin Source File
