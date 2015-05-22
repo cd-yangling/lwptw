@@ -30,6 +30,15 @@ enum
 	PTHREAD_MUTEX_FAST_NP = PTHREAD_MUTEX_TIMED_NP
 };
 
+#define	PTHREAD_MUTEX_INITIALIZER	\
+	{ 0, 0, 0, PTHREAD_MUTEX_DEFAULT }
+
+typedef struct pthread_mutexattr_s
+{
+	int					_kind;			/*	lock kind*/
+	int					_rsv0;			/*	never use*/
+} pthread_mutexattr_t;
+
 typedef struct pthread_mutex_s
 {
 	int					_futex;
@@ -48,7 +57,7 @@ enum
 };
 
 #define PTHREAD_RWLOCK_INITIALIZER	\
-	{ 0, 0, 0, 0, 0, 0, 0, 0 }
+	{ 0, 0, 0, 0, 0, 0, 0, PTHREAD_RWLOCK_PREFER_READER_NP }
 
 typedef struct pthread_rwlockattr_s
 {
@@ -103,6 +112,9 @@ int pthread_mutex_lock(pthread_mutex_t * mutex);
 
 LIBLWPTW_API
 int pthread_mutex_unlock(pthread_mutex_t * mutex);
+
+LIBLWPTW_API
+int pthread_mutexattr_init(pthread_mutexattr_t *attr);
 
 LIBLWPTW_API
 int pthread_rwlock_init(
