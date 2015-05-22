@@ -50,6 +50,31 @@ int __lll_lock_try_acquire(int * lock)
 #define	lll_lock_try_acquire(_lock_)					\
 	__lll_lock_try_acquire(&(_lock_))
 
+always_inline static
+int __lll_lock_timed_acquire(
+	int * lock, const struct timespec *abstime)
+{
+	int c;
+	int err;
+
+	if((c = atomic_cmpxchg(lock, 0, 1)) != 0) {
+		if(c != 2)
+			c = atomic_xchg(lock, 2);
+		while(c != 0) {
+			err = lll_futex_timed_wait(
+						lock, 2, abstime);
+			if(E_FUTEX_TIMEOUT == err)
+				return 1;
+			c = atomic_xchg(lock, 2);
+		}
+	}
+
+	return 0;
+}
+
+#define lll_lock_timed_acquire(_lock_, _abstime_)		\
+	__lll_lock_timed_acquire(&(_lock_), (_abstime_))
+
 #define	lll_lock_acquire(_lock_)						\
 	do {												\
 		int c;											\

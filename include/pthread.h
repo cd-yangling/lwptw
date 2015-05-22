@@ -126,6 +126,10 @@ LIBLWPTW_API
 int pthread_mutex_trylock(pthread_mutex_t * mutex);
 
 LIBLWPTW_API
+int pthread_mutex_timedlock(
+	pthread_mutex_t * mutex, const struct timespec * tmout);
+
+LIBLWPTW_API
 int pthread_mutex_unlock(pthread_mutex_t * mutex);
 
 LIBLWPTW_API
