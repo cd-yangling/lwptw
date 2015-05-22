@@ -33,6 +33,18 @@ enum
 #define	PTHREAD_MUTEX_INITIALIZER	\
 	{ 0, 0, 0, PTHREAD_MUTEX_DEFAULT }
 
+#define	PTHREAD_RECURSIVE_MUTEX_INITIALIZER	\
+	{ 0, 0, 0, PTHREAD_MUTEX_RECURSIVE }
+
+#define PTHREAD_ERRORCHECK_MUTEX_INITIALIZER	\
+	{ 0, 0, 0, PTHREAD_MUTEX_ERRORCHECK }
+
+#define PTHREAD_RECURSIVE_MUTEX_INITIALIZER_NP \
+		PTHREAD_RECURSIVE_MUTEX_INITIALIZER
+
+#define PTHREAD_ERRORCHECK_MUTEX_INITIALIZER_NP \
+		PTHREAD_ERRORCHECK_MUTEX_INITIALIZER
+
 typedef struct pthread_mutexattr_s
 {
 	int					_kind;			/*	lock kind*/
@@ -41,7 +53,7 @@ typedef struct pthread_mutexattr_s
 
 typedef struct pthread_mutex_s
 {
-	int					_futex;
+	int					_mlock;
 	int					_owner;
 	unsigned int		_count;
 	int					_flags;

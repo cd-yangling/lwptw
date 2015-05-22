@@ -30,7 +30,7 @@ int pthread_mutex_lock(pthread_mutex_t * mutex)
 	{
 	case PTHREAD_MUTEX_NORMAL:
 		{
-			lll_lock_acquire(mutex->_futex);
+			lll_lock_acquire(mutex->_mlock);
 		}
 		return 0;
 	case PTHREAD_MUTEX_RECURSIVE:
@@ -48,7 +48,7 @@ int pthread_mutex_lock(pthread_mutex_t * mutex)
 				return 0;
 			}
 
-			lll_lock_acquire(mutex->_futex);
+			lll_lock_acquire(mutex->_mlock);
 
 			mutex->_owner = tid;
 			mutex->_count = 1;
@@ -61,10 +61,9 @@ int pthread_mutex_lock(pthread_mutex_t * mutex)
 			if(mutex->_owner == tid)
 				return EDEADLK;
 
-			lll_lock_acquire(mutex->_futex);
+			lll_lock_acquire(mutex->_mlock);
 
 			mutex->_owner = tid;
-			mutex->_count = 1;
 		}
 		return 0;
 	default:

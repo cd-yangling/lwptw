@@ -31,7 +31,7 @@ int pthread_mutex_unlock(pthread_mutex_t * mutex)
 	case PTHREAD_MUTEX_NORMAL:
 		{
 normal:
-			lll_lock_release(mutex->_futex);
+			lll_lock_release(mutex->_mlock);
 			return 0;
 		}
 	case PTHREAD_MUTEX_RECURSIVE:
@@ -52,7 +52,7 @@ normal:
 			int tid = GetCurrentThreadId();
 
 			if((mutex->_owner != tid) ||
-				(!(mutex->_futex != 0)))
+				(!(mutex->_mlock != 0)))
 				return EPERM;
 
 			goto normal;
