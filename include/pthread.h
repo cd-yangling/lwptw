@@ -124,6 +124,10 @@ int pthread_mutexattr_settype(
 	pthread_mutexattr_t *attr, int type);
 
 LIBLWPTW_API
+int pthread_mutexattr_gettype(
+	pthread_mutexattr_t *attr, int * type);
+
+LIBLWPTW_API
 int pthread_rwlock_init(
 	pthread_rwlock_t * rwlock,
 	const pthread_rwlockattr_t * attr);

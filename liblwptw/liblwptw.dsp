@@ -106,6 +106,10 @@ SOURCE=.\pthread_mutexattr_destroy.c
 # End Source File
 # Begin Source File
 
+SOURCE=.\pthread_mutexattr_gettype.c
+# End Source File
+# Begin Source File
+
 SOURCE=.\pthread_mutexattr_init.c
 # End Source File
 # Begin Source File
