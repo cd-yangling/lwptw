@@ -18,7 +18,6 @@ static const char rcsid[] =
 	"v 1.00 2015/05/15 09:00:00 CST yangling Exp $ (LBL)";
 #endif
 
-#include "./spinlock.h"
 #include "./liblwptw.h"
 #include "./rwlock.h"
 #include "pthread.h"
@@ -32,7 +31,7 @@ int pthread_rwlock_rdlock(pthread_rwlock_t * rwlock)
 	int _futex;
 	int tid = GetCurrentThreadId();
 
-	spin_acquire((spinlock_t*)&rwlock->_lock);
+	lll_lock_acquire(rwlock->_lock);
 
 	for(;;)
 	{
@@ -62,16 +61,16 @@ int pthread_rwlock_rdlock(pthread_rwlock_t * rwlock)
 
 		_futex = rwlock->_rd_futex;
 		
-		spin_release((spinlock_t*)&rwlock->_lock);
+		lll_lock_release(rwlock->_lock);
 
 		lll_futex_wait(&rwlock->_rd_futex, _futex);
 
-		spin_acquire((spinlock_t*)&rwlock->_lock);
+		lll_lock_acquire(rwlock->_lock);
 
 		--rwlock->_nr_readers_queued;
 	}
 
-	spin_release((spinlock_t*)&rwlock->_lock);
+	lll_lock_release(rwlock->_lock);
 
 	return result;
 }

@@ -18,7 +18,6 @@ static const char rcsid[] =
 	"v 1.00 2015/05/15 09:00:00 CST yangling Exp $ (LBL)";
 #endif
 
-#include "./spinlock.h"
 #include "./liblwptw.h"
 #include "./rwlock.h"
 #include "pthread.h"
@@ -29,7 +28,7 @@ int pthread_rwlock_tryrdlock(pthread_rwlock_t * rwlock)
 {
 	int result = EBUSY;
 
-	spin_acquire((spinlock_t*)&rwlock->_lock);
+	lll_lock_acquire(rwlock->_lock);
 
 	if(can_hold_rdlock(rwlock))
 	{
@@ -42,7 +41,7 @@ int pthread_rwlock_tryrdlock(pthread_rwlock_t * rwlock)
 			result = 0;
 	}
 
-	spin_release((spinlock_t*)&rwlock->_lock);
+	lll_lock_release(rwlock->_lock);
 
 	return result;
 }

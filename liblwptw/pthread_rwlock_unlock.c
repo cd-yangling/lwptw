@@ -18,7 +18,6 @@ static const char rcsid[] =
 	"v 1.00 2015/05/15 09:00:00 CST yangling Exp $ (LBL)";
 #endif
 
-#include "./spinlock.h"
 #include "./liblwptw.h"
 #include "pthread.h"
 #include <errno.h>
@@ -27,7 +26,7 @@ static const char rcsid[] =
 LIBLWPTW_API
 int pthread_rwlock_unlock(pthread_rwlock_t * rwlock)
 {
-	spin_acquire((spinlock_t*)&rwlock->_lock);
+	lll_lock_acquire(rwlock->_lock);
 
 	if(rwlock->_writer)
 		rwlock->_writer = 0;
@@ -39,20 +38,20 @@ int pthread_rwlock_unlock(pthread_rwlock_t * rwlock)
 		if(rwlock->_nr_writers_queued)
 		{
 			++rwlock->_wr_futex;
-			spin_release((spinlock_t*)&rwlock->_lock);
+			lll_lock_release(rwlock->_lock);
 			lll_futex_wake(&rwlock->_wr_futex, 1);
 			return 0;
 		}
 		else if(rwlock->_nr_readers_queued)
 		{
 			++rwlock->_rd_futex;
-			spin_release((spinlock_t*)&rwlock->_lock);
+			lll_lock_release(rwlock->_lock);
 			lll_futex_wake(&rwlock->_rd_futex, INT_MAX);
 			return 0;
 		}
 	}
 
-	spin_release((spinlock_t*)&rwlock->_lock);
+	lll_lock_release(rwlock->_lock);
 
 	return 0;
 }
