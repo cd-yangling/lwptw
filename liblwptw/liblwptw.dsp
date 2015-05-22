@@ -110,6 +110,10 @@ SOURCE=.\pthread_mutexattr_init.c
 # End Source File
 # Begin Source File
 
+SOURCE=.\pthread_mutexattr_settype.c
+# End Source File
+# Begin Source File
+
 SOURCE=.\pthread_rwlock_destroy.c
 # End Source File
 # Begin Source File
