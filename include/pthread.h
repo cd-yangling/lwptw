@@ -117,6 +117,9 @@ LIBLWPTW_API
 int pthread_mutexattr_init(pthread_mutexattr_t *attr);
 
 LIBLWPTW_API
+int pthread_mutexattr_destroy(pthread_mutexattr_t *attr);
+
+LIBLWPTW_API
 int pthread_rwlock_init(
 	pthread_rwlock_t * rwlock,
 	const pthread_rwlockattr_t * attr);
