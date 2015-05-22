@@ -69,7 +69,7 @@ enum
 };
 
 #define PTHREAD_RWLOCK_INITIALIZER	\
-	{ 0, 0, 0, 0, 0, 0, 0, PTHREAD_RWLOCK_PREFER_READER_NP }
+	{ 0, 0, 0, 0, 0, 0, 0, PTHREAD_RWLOCK_DEFAULT_NP }
 
 typedef struct pthread_rwlockattr_s
 {
