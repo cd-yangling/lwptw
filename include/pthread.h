@@ -13,11 +13,29 @@
 #ifndef	__LIBLWPTW_PTHREAD_H__
 #define	__LIBLWPTW_PTHREAD_H__
 
+/*	mutex types*/
+enum
+{
+	/* Compatibility with LinuxThreads */
+	PTHREAD_MUTEX_TIMED_NP,
+	PTHREAD_MUTEX_RECURSIVE_NP,
+	PTHREAD_MUTEX_ERRORCHECK_NP,
+	PTHREAD_MUTEX_ADAPTIVE_NP,
+	/* For compatibility with POSIX */
+	PTHREAD_MUTEX_NORMAL = PTHREAD_MUTEX_TIMED_NP,
+	PTHREAD_MUTEX_RECURSIVE = PTHREAD_MUTEX_RECURSIVE_NP,
+	PTHREAD_MUTEX_ERRORCHECK = PTHREAD_MUTEX_ERRORCHECK_NP,
+	PTHREAD_MUTEX_DEFAULT = PTHREAD_MUTEX_NORMAL,
+	/* For compatibility with GNU */
+	PTHREAD_MUTEX_FAST_NP = PTHREAD_MUTEX_TIMED_NP
+};
+
 typedef struct pthread_mutex_s
 {
 	int					_futex;
 	int					_owner;
 	unsigned int		_count;
+	int					_flags;
 } pthread_mutex_t;
 
 /*	read-write lock types*/

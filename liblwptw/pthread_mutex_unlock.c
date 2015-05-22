@@ -9,8 +9,7 @@
  *
  *	2015-05-15 Created By YangLing
  *
- *	implementation href:
- *	http://people.redhat.com/drepper/futex.pdf
+ *	implementation ²Î¿¼ glibc
  */
 
 #ifndef lint
@@ -19,22 +18,39 @@ static const char rcsid[] =
 	"v 1.00 2015/05/15 09:00:00 CST yangling Exp $ (LBL)";
 #endif
 
-#include "./atomic.h"
 #include "./liblwptw.h"
 #include "pthread.h"
+#include <errno.h>
+#include <windows.h>
 
-/**
- *	0:	unlocked
- *	1:	locked, no waiters
- *	2:	locked, one or more waiters
- */
 LIBLWPTW_API
 int pthread_mutex_unlock(pthread_mutex_t * mutex)
 {
-	if(atomic_dec_and_return(&mutex->_futex) != 1)
+	switch(mutex->_flags)
 	{
-		*(volatile int *)(&mutex->_futex) = 0;
-		lll_futex_wake(&mutex->_futex, 1);
+	case PTHREAD_MUTEX_NORMAL:
+		lll_lock_release(mutex->_futex);
+		break;
+	case PTHREAD_MUTEX_RECURSIVE:
+		{
+			int tid = GetCurrentThreadId();
+
+			if(mutex->_owner != tid)
+				return EPERM;
+
+			if(--mutex->_count != 0)
+				return 0;	/*	still hold the mutex*/
+
+			mutex->_owner = 0;
+			lll_lock_release(mutex->_futex);
+		}
+		break;
+	case PTHREAD_MUTEX_ERRORCHECK:
+		mutex->_owner = 0;
+		lll_lock_release(mutex->_futex);
+		break;
+	default:
+		return EINVAL;
 	}
 
 	return 0;
