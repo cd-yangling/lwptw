@@ -79,7 +79,7 @@ typedef struct pthread_rwlockattr_s
 
 typedef struct pthread_rwlock_s
 {
-	int				_lock;				/*	spinlock*/
+	int				_lock;
 	unsigned int	_nr_readers;		/*	number of holding for rd*/
 	unsigned int	_rd_futex;
 	unsigned int	_wr_futex;
@@ -118,6 +118,10 @@ struct timespec {
 #ifdef	__cplusplus
 extern	"C" {
 #endif
+
+LIBLWPTW_API
+int pthread_mutex_init(
+	pthread_mutex_t * mutex, const pthread_mutexattr_t *attr);
 
 LIBLWPTW_API
 int pthread_mutex_lock(pthread_mutex_t * mutex);
