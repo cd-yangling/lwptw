@@ -4,7 +4,7 @@
 #include <limits.h>
 #include <string.h>
 
-int do_test0201(void)
+int rwlock_0201(void)
 {
 	unsigned int i;
 	int result;

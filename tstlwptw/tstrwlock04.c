@@ -41,7 +41,7 @@ static void _0401_thread(void * args)
  *
  *	reader prefer case
  */
-int do_test0401(void)
+int rwlock_0401(void)
 {
 	DWORD res;
 	int result;
@@ -104,7 +104,7 @@ static void _0402_thread(void * args)
 /**
  *	reader prefer case
  */
-int do_test0402(void)
+int rwlock_0402(void)
 {
 	int result;
 	pthread_rwlock_t rwlock = PTHREAD_RWLOCK_INITIALIZER;
@@ -157,7 +157,7 @@ int do_test0402(void)
 /**
  *	writer prefer case
  */
-int do_test0403(void)
+int rwlock_0403(void)
 {
 	int result;
 	pthread_rwlock_t rwlock;
@@ -213,7 +213,7 @@ static void _0404_thread(void * args)
 /**
  *	0401 pthread_rwlock_rdlock case
  */
-int do_test0404(void)
+int rwlock_0404(void)
 {
 	int result;
 
@@ -281,7 +281,7 @@ static void _0405W_thread(void * args)
 /**
  *	0403 pthread_rwlock_rdlock case
  */
-int do_test0405(void)
+int rwlock_0405(void)
 {
 	int result;
 	

@@ -3,7 +3,7 @@
 #include <errno.h>
 #include <limits.h>
 
-int do_test0101(void)
+int rwlock_0101(void)
 {
 	unsigned int i;
 	int result, except;
@@ -49,7 +49,7 @@ int do_test0101(void)
 	return 0;
 }
 
-int do_test0102(void)
+int rwlock_0102(void)
 {
 	int result;
 	pthread_rwlockattr_t attr;

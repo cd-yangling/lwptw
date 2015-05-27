@@ -8,7 +8,7 @@
 /**
  *	EDEADLK test
  */
-int do_test0501(void)
+int rwlock_0501(void)
 {
 	int result;
 	pthread_rwlock_t	rwlock;
@@ -28,7 +28,7 @@ int do_test0501(void)
 	return 0;
 }
 
-int do_test0502(void)
+int rwlock_0502(void)
 {
 	int result;
 	pthread_rwlock_t	rwlock;
@@ -51,7 +51,7 @@ int do_test0502(void)
 /**
  *	_nr_writers_queued overflow
  */
-int do_test0503(void)
+int rwlock_0503(void)
 {
 	int result;
 	int tid = GetCurrentThreadId();
@@ -70,7 +70,7 @@ int do_test0503(void)
 	return 0;
 }
 
-int do_test0504(void)
+int rwlock_0504(void)
 {
 	int result;
 	int tid = GetCurrentThreadId();

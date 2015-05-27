@@ -8,7 +8,7 @@
 /**
  *	_nr_reader overflow test
  */
-int do_test0301(void)
+int rwlock_0301(void)
 {
 	unsigned int i;
 	int result;
@@ -37,7 +37,7 @@ int do_test0301(void)
 	return 0;
 }
 
-int do_test0302(void)
+int rwlock_0302(void)
 {
 	unsigned int i;
 	int result;
@@ -66,7 +66,7 @@ int do_test0302(void)
 	return 0;
 }
 
-int do_test0303(void)
+int rwlock_0303(void)
 {
 	unsigned int i;
 	int result;
@@ -98,7 +98,7 @@ int do_test0303(void)
 /**
  *	EDEADLK test
  */
-int do_test0304(void)
+int rwlock_0304(void)
 {
 	int result;
 	pthread_rwlock_t	rwlock;
@@ -118,7 +118,7 @@ int do_test0304(void)
 	return 0;
 }
 
-int do_test0305(void)
+int rwlock_0305(void)
 {
 	int result;
 	pthread_rwlock_t	rwlock;
@@ -141,7 +141,7 @@ int do_test0305(void)
 /**
  *	_nr_readers_queued overflow test
  */
-int do_test0306(void)
+int rwlock_0306(void)
 {
 	int result;
 	int tid = GetCurrentThreadId();
@@ -156,7 +156,7 @@ int do_test0306(void)
 		return 0;
 }
 
-int do_test0307(void)
+int rwlock_0307(void)
 {
 	int result;
 	int tid = GetCurrentThreadId();

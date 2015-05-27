@@ -20,58 +20,58 @@
 		#_name_,	_name_		\
 	}
 
-extern int do_test0101(void);
-extern int do_test0102(void);
-extern int do_test0201(void);
-extern int do_test0301(void);
-extern int do_test0302(void);
-extern int do_test0303(void);
-extern int do_test0304(void);
-extern int do_test0305(void);
-extern int do_test0306(void);
-extern int do_test0307(void);
-extern int do_test0401(void);
-extern int do_test0402(void);
-extern int do_test0403(void);
-extern int do_test0404(void);
-extern int do_test0405(void);
-extern int do_test0501(void);
-extern int do_test0502(void);
-extern int do_test0503(void);
-extern int do_test0504(void);
-extern int do_test0601(void);
-extern int do_test0602(void);
-extern int do_test0603(void);
-extern int do_test0604(void);
+extern int rwlock_0101(void);
+extern int rwlock_0102(void);
+extern int rwlock_0201(void);
+extern int rwlock_0301(void);
+extern int rwlock_0302(void);
+extern int rwlock_0303(void);
+extern int rwlock_0304(void);
+extern int rwlock_0305(void);
+extern int rwlock_0306(void);
+extern int rwlock_0307(void);
+extern int rwlock_0401(void);
+extern int rwlock_0402(void);
+extern int rwlock_0403(void);
+extern int rwlock_0404(void);
+extern int rwlock_0405(void);
+extern int rwlock_0501(void);
+extern int rwlock_0502(void);
+extern int rwlock_0503(void);
+extern int rwlock_0504(void);
+extern int rwlock_0601(void);
+extern int rwlock_0602(void);
+extern int rwlock_0603(void);
+extern int rwlock_0604(void);
 
 static struct test_fn_t {
 	const char * name_fn;
 	int (*test_fn)(void);
 } test_fns[] = 
 {
-	DECL_TEST_FN(do_test0101),
-	DECL_TEST_FN(do_test0102),
-	DECL_TEST_FN(do_test0201),
-	DECL_TEST_FN(do_test0301),
-	DECL_TEST_FN(do_test0302),
-	DECL_TEST_FN(do_test0303),
-	DECL_TEST_FN(do_test0304),
-	DECL_TEST_FN(do_test0305),
-	DECL_TEST_FN(do_test0306),
-	DECL_TEST_FN(do_test0307),
-	DECL_TEST_FN(do_test0401),
-	DECL_TEST_FN(do_test0402),
-	DECL_TEST_FN(do_test0403),
-	DECL_TEST_FN(do_test0404),
-	DECL_TEST_FN(do_test0405),
-	DECL_TEST_FN(do_test0501),
-	DECL_TEST_FN(do_test0502),
-	DECL_TEST_FN(do_test0503),
-	DECL_TEST_FN(do_test0504),
-	DECL_TEST_FN(do_test0601),
-	DECL_TEST_FN(do_test0602),
-	DECL_TEST_FN(do_test0603),
-	DECL_TEST_FN(do_test0604),
+	DECL_TEST_FN(rwlock_0101),
+	DECL_TEST_FN(rwlock_0102),
+	DECL_TEST_FN(rwlock_0201),
+	DECL_TEST_FN(rwlock_0301),
+	DECL_TEST_FN(rwlock_0302),
+	DECL_TEST_FN(rwlock_0303),
+	DECL_TEST_FN(rwlock_0304),
+	DECL_TEST_FN(rwlock_0305),
+	DECL_TEST_FN(rwlock_0306),
+	DECL_TEST_FN(rwlock_0307),
+	DECL_TEST_FN(rwlock_0401),
+	DECL_TEST_FN(rwlock_0402),
+	DECL_TEST_FN(rwlock_0403),
+	DECL_TEST_FN(rwlock_0404),
+	DECL_TEST_FN(rwlock_0405),
+	DECL_TEST_FN(rwlock_0501),
+	DECL_TEST_FN(rwlock_0502),
+	DECL_TEST_FN(rwlock_0503),
+	DECL_TEST_FN(rwlock_0504),
+	DECL_TEST_FN(rwlock_0601),
+	DECL_TEST_FN(rwlock_0602),
+	DECL_TEST_FN(rwlock_0603),
+	DECL_TEST_FN(rwlock_0604),
 };
 
 static volatile HANDLE _bgn_evt;

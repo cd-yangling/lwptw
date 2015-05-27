@@ -7,7 +7,7 @@
 #include <time.h>
 #include <windows.h>
 
-int do_test0601(void)
+int rwlock_0601(void)
 {
 	int result;
 	pthread_rwlock_t rwlock = PTHREAD_RWLOCK_INITIALIZER;
@@ -45,7 +45,7 @@ static void _0602_thread(void * args)
 	_0602_over = 1;
 }
 
-int do_test0602(void)
+int rwlock_0602(void)
 {
 	DWORD res;
 	int result;
@@ -112,7 +112,7 @@ static void _0603_thread(void * args)
 	_0603_over = 1;
 }
 
-int do_test0603(void)
+int rwlock_0603(void)
 {
 	DWORD res;
 	int result;
@@ -176,7 +176,7 @@ static void _0604_thread(void * args)
 	_0604_over = 1;
 }
 
-int do_test0604(void)
+int rwlock_0604(void)
 {
 	int result;
 	pthread_rwlock_t rwlock = PTHREAD_RWLOCK_INITIALIZER;
