@@ -111,6 +111,10 @@ SOURCE=.\tstmutex05.c
 # End Source File
 # Begin Source File
 
+SOURCE=.\tstmutex06.c
+# End Source File
+# Begin Source File
+
 SOURCE=.\tstrwlock01.c
 # End Source File
 # Begin Source File

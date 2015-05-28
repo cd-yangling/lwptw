@@ -63,7 +63,7 @@ int __lll_lock_timed_acquire(
 		while(c != 0) {
 			err = lll_futex_timed_wait(
 						lock, 2, abstime);
-			if(E_FUTEX_TIMEOUT == err)
+			if(-E_FUTEX_TIMEOUT == err)
 				return 1;
 			c = atomic_xchg(lock, 2);
 		}
