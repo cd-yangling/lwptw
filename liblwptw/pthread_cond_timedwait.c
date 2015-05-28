@@ -19,7 +19,7 @@ static const char rcsid[] =
 #endif
 
 #include "pthread.h"
-#include "liblwptw.h"
+#include "./liblwptw.h"
 
 LIBLWPTW_API
 int pthread_cond_timedwait(
