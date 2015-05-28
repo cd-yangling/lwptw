@@ -59,6 +59,19 @@ typedef struct pthread_mutex_s
 	int					_flags;
 } pthread_mutex_t;
 
+typedef struct pthread_condattr_s
+{
+	int					_kind;			/*	never use*/
+	int					_rsv0;			/*	never use*/
+} pthread_condattr_t;
+
+typedef struct pthread_cond_s
+{
+	int					_cv;			/*	condition variables*/
+} pthread_cond_t;
+
+#define	PTHREAD_COND_INITIALIZER {0}
+
 /*	read-write lock types*/
 enum
 {
@@ -152,6 +165,10 @@ int pthread_mutexattr_settype(
 LIBLWPTW_API
 int pthread_mutexattr_gettype(
 	pthread_mutexattr_t *attr, int * type);
+
+LIBLWPTW_API
+int pthread_cond_init(
+	pthread_cond_t * cond, const pthread_condattr_t *attr);
 
 LIBLWPTW_API
 int pthread_rwlock_init(
