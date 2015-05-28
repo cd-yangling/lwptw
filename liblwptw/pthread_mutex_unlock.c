@@ -44,6 +44,8 @@ normal:
 			if(--mutex->_count != 0)
 				return 0;	/*	still hold the mutex*/
 
+			mutex->_owner = 0;
+
 			goto normal;
 		}
 		return 0;
@@ -54,6 +56,8 @@ normal:
 			if((mutex->_owner != tid) ||
 				(!(mutex->_mlock != 0)))
 				return EPERM;
+
+			mutex->_owner = 0;
 
 			goto normal;
 		}
