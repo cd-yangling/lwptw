@@ -102,6 +102,10 @@ SOURCE=.\pthread_cond_init.c
 # End Source File
 # Begin Source File
 
+SOURCE=.\pthread_cond_wait.c
+# End Source File
+# Begin Source File
+
 SOURCE=.\pthread_mutex_destroy.c
 # End Source File
 # Begin Source File
