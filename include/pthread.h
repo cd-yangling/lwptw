@@ -183,6 +183,9 @@ int pthread_cond_timedwait(
 	const struct timespec * tmout);
 
 LIBLWPTW_API
+int pthread_cond_signal(pthread_cond_t * cond);
+
+LIBLWPTW_API
 int pthread_rwlock_init(
 	pthread_rwlock_t * rwlock,
 	const pthread_rwlockattr_t * attr);

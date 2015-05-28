@@ -18,6 +18,20 @@
 #endif
 
 /**
+ *	原子的对 @augend 指向的 32bit
+ *	的值加1
+ */
+always_inline static
+void atomic_inc(int * augend)
+{
+	__asm
+	{
+		mov			edx, dword ptr [augend];
+		lock inc	dword ptr [edx];
+	}
+}
+
+/**
  *	原子的对 @minuend 指向的 32bit
  *	的值减1 然后返回 @minuend 指向
  *	减1之前的值
