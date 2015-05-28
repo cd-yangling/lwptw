@@ -91,6 +91,10 @@ SOURCE=.\tstcond01.c
 # End Source File
 # Begin Source File
 
+SOURCE=.\tstcond02.c
+# End Source File
+# Begin Source File
+
 SOURCE=.\tstlwptw.c
 # End Source File
 # Begin Source File
