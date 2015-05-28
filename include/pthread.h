@@ -178,6 +178,11 @@ int pthread_cond_wait(
 	pthread_cond_t * cond, pthread_mutex_t * mutex);
 
 LIBLWPTW_API
+int pthread_cond_timedwait(
+	pthread_cond_t * cond, pthread_mutex_t * mutex,
+	const struct timespec * tmout);
+
+LIBLWPTW_API
 int pthread_rwlock_init(
 	pthread_rwlock_t * rwlock,
 	const pthread_rwlockattr_t * attr);
