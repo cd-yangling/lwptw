@@ -28,6 +28,7 @@ int pthread_cond_timedwait(
 {
 	int _cv;
 	int result;
+	int err;
 
 	_cv = *(volatile int *)(&cond->_cv);
 
@@ -35,11 +36,13 @@ int pthread_cond_timedwait(
 	if(result)
 		return result;
 
-	result = lll_futex_timed_wait(&(cond->_cv), _cv, tmout);
-	if(-E_FUTEX_TIMEOUT == result)
-		result = ETIMEDOUT;
+	err = lll_futex_timed_wait(&(cond->_cv), _cv, tmout);
+	if(-E_FUTEX_TIMEOUT == err)
+		err = ETIMEDOUT;
 	else
-		result = 0;
+		err = 0;
 
-	return result;
+	result = pthread_mutex_lock(mutex);
+
+	return (result ? result : err);
 }
