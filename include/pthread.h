@@ -171,6 +171,9 @@ int pthread_cond_init(
 	pthread_cond_t * cond, const pthread_condattr_t *attr);
 
 LIBLWPTW_API
+int pthread_cond_destroy(pthread_cond_t * cond);
+
+LIBLWPTW_API
 int pthread_rwlock_init(
 	pthread_rwlock_t * rwlock,
 	const pthread_rwlockattr_t * attr);
