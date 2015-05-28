@@ -59,6 +59,9 @@ extern int mutex_0309(void);
 extern int mutex_0401(void);
 extern int mutex_0402(void);
 extern int mutex_0403(void);
+extern int mutex_0501(void);
+extern int mutex_0502(void);
+extern int mutex_0503(void);
 
 static struct test_fn_t {
 	const char * name_fn;
@@ -104,6 +107,9 @@ static struct test_fn_t {
 	DECL_TEST_FN(mutex_0401),
 	DECL_TEST_FN(mutex_0402),
 	DECL_TEST_FN(mutex_0403),
+	DECL_TEST_FN(mutex_0501),
+	DECL_TEST_FN(mutex_0502),
+	DECL_TEST_FN(mutex_0503),
 };
 
 static volatile HANDLE _bgn_evt;

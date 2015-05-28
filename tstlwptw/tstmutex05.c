@@ -6,11 +6,14 @@
 #include <windows.h>
 #include <process.h>
 
-static volatile int		_0401_over = 0;
+static volatile int		_0501_over = 0;
+static volatile HANDLE	_h1;
+static volatile HANDLE	_h2;
 
-static void _0401_thread(void * args)
+static void _0501_thread(void * args)
 {
 	int result;
+	DWORD res;
 	pthread_mutex_t * mutex = 
 		(pthread_mutex_t*)args;
 
@@ -18,47 +21,121 @@ static void _0401_thread(void * args)
 	if(result)
 		return;
 
-	result = pthread_mutex_unlock(mutex);
-	if(result)
+	SetEvent(_h1);
+	res = WaitForSingleObject(_h2, INFINITE);
+	if(res != WAIT_OBJECT_0)
 		return;
 
-	_0401_over = 1;
+	result = pthread_mutex_lock(mutex);
+	if(result)
+		return;
+	
+	SetEvent(_h1);
+	res = WaitForSingleObject(_h2, INFINITE);
+	if(res != WAIT_OBJECT_0)
+		return;
+
+	result = pthread_mutex_lock(mutex);
+	if(result)
+		return;
+	
+	SetEvent(_h1);
+	res = WaitForSingleObject(_h2, INFINITE);
+	if(res != WAIT_OBJECT_0)
+		return;
+
+	_0501_over = 1;
 
 	return;
 }
 
-int mutex_0401(void)
+int mutex_0501(void)
 {
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+	pthread_mutex_t mutex;
+	pthread_mutexattr_t attr;
+	DWORD	res;
 	int result;
 
-	result = pthread_mutex_lock(&mutex);
+	result = pthread_mutexattr_init(&attr);
 	if(result)
 		return -1;
 
-	if(mutex._mlock != 1)
+	result = pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_NORMAL);
+	if(result)
 		return -2;
 
-	_0401_over = 0;
-	_beginthread(_0401_thread, 0, &mutex);
-
-	while(mutex._mlock != 2)
-		Sleep(1);
-
-	result = pthread_mutex_unlock(&mutex);
+	result = pthread_mutex_init(&mutex, &attr);
 	if(result)
 		return -3;
 
-	while(mutex._mlock != 0)
+	_0501_over = 0;
+	_h1 = CreateEvent(NULL, FALSE, FALSE, NULL);
+	_h2 = CreateEvent(NULL, FALSE, FALSE, NULL);
+	_beginthread(_0501_thread, 0, &mutex);
+	res = WaitForSingleObject(_h1, INFINITE);
+	if(res != WAIT_OBJECT_0)
+		return -4;
+
+	result = pthread_mutex_trylock(&mutex);
+	if(result != EBUSY)
+		return -5;
+
+	//////////////////////////////////////////////////////////////////////////
+	result = pthread_mutexattr_init(&attr);
+	if(result)
+		return -6;
+
+	result = pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
+	if(result)
+		return -7;
+
+	result = pthread_mutex_init(&mutex, &attr);
+	if(result)
+		return -8;
+
+	SetEvent(_h2);
+	res = WaitForSingleObject(_h1, INFINITE);
+	if(res != WAIT_OBJECT_0)
+		return -9;
+
+	result = pthread_mutex_trylock(&mutex);
+	if(result != EBUSY)
+		return -10;
+
+	//////////////////////////////////////////////////////////////////////////
+	result = pthread_mutexattr_init(&attr);
+	if(result)
+		return -6;
+	
+	result = pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_ERRORCHECK);
+	if(result)
+		return -7;
+	
+	result = pthread_mutex_init(&mutex, &attr);
+	if(result)
+		return -8;
+	
+	SetEvent(_h2);
+	res = WaitForSingleObject(_h1, INFINITE);
+	if(res != WAIT_OBJECT_0)
+		return -9;
+	
+	result = pthread_mutex_trylock(&mutex);
+	if(result != EBUSY)
+		return -10;
+	//////////////////////////////////////////////////////////////////////////
+
+	SetEvent(_h2);
+
+	while(_0501_over == 0)
 		Sleep(1);
 
-	while(_0401_over == 0)
-		Sleep(1);
-
+	CloseHandle(_h1);
+	CloseHandle(_h2);
 	return 0;
 }
 
-int mutex_0402(void)
+int mutex_0502(void)
 {
 	pthread_mutex_t mutex = PTHREAD_RECURSIVE_MUTEX_INITIALIZER;
 	int result;
@@ -69,7 +146,7 @@ int mutex_0402(void)
 
 	for(i = 0; i < UINT_MAX ;i++)
 	{
-		result = pthread_mutex_lock(&mutex);
+		result = pthread_mutex_trylock(&mutex);
 		if(result)
 			return -1;
 
@@ -88,7 +165,7 @@ int mutex_0402(void)
 		_cur_finish++;
 	}
 
-	result = pthread_mutex_lock(&mutex);
+	result = pthread_mutex_trylock(&mutex);
 	if(result != EAGAIN)
 		return -6;
 
@@ -162,13 +239,13 @@ int mutex_0402(void)
 	return 0;
 }
 
-int mutex_0403(void)
+int mutex_0503(void)
 {
 	pthread_mutex_t mutex = PTHREAD_ERRORCHECK_MUTEX_INITIALIZER;
 	int result;
 	int tid = GetCurrentThreadId();
 
-	result = pthread_mutex_lock(&mutex);
+	result = pthread_mutex_trylock(&mutex);
 	if(result)
 		return -1;
 
@@ -181,7 +258,7 @@ int mutex_0403(void)
 	if(PTHREAD_MUTEX_ERRORCHECK != mutex._flags)
 		return -4;
 
-	result = pthread_mutex_lock(&mutex);
+	result = pthread_mutex_trylock(&mutex);
 	if(result != EDEADLK)
 		return -5;
 
