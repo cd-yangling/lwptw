@@ -36,5 +36,5 @@ int pthread_cond_wait(
 
 	lll_futex_wait(&(cond->_cv), _cv);
 
-	return 0;
+	return pthread_mutex_lock(mutex);
 }
